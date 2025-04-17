@@ -1,0 +1,143 @@
+[gd_scene load_steps=13 format=3 uid="uid://ceflh8ufr35q5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e8i0x"]
+size = Vector3(450, 2, 450)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ious"]
+size = Vector3(450, 2, 450)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h0tqs"]
+size = Vector3(40, 40, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qaeb5"]
+size = Vector3(40, 40, 100)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4se8t"]
+height = 40.0
+radius = 25.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_que4c"]
+top_radius = 25.0
+bottom_radius = 25.0
+height = 40.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_guaq8"]
+height = 10.0
+radius = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vt7bg"]
+top_radius = 4.0
+bottom_radius = 4.0
+height = 10.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fujpw"]
+height = 35.0
+radius = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ay0x1"]
+top_radius = 2.0
+bottom_radius = 2.0
+height = 35.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bxtbw"]
+height = 50.0
+radius = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_85p25"]
+top_radius = 2.0
+bottom_radius = 2.0
+height = 50.0
+
+[node name="Main" type="Node"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_e8i0x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_6ious")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.12206, 0.992523, 0, -0.992523, -0.12206, 0, 110.752, 0)
+shadow_enabled = true
+
+[node name="Building" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+shape = SubResource("BoxShape3D_h0tqs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+mesh = SubResource("BoxMesh_qaeb5")
+
+[node name="Building_cylinder" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 55)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building_cylinder"]
+shape = SubResource("CylinderShape3D_4se8t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building_cylinder"]
+mesh = SubResource("CylinderMesh_que4c")
+
+[node name="Telescope" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45, 22)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Telescope"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+shape = SubResource("CylinderShape3D_guaq8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Telescope"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+mesh = SubResource("CylinderMesh_vt7bg")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="Machta0" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140, 17.1381, 22)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machta0"]
+shape = SubResource("CylinderShape3D_fujpw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machta0"]
+mesh = SubResource("CylinderMesh_ay0x1")
+
+[node name="Machta1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.1, 180)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machta1"]
+shape = SubResource("CylinderShape3D_fujpw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machta1"]
+mesh = SubResource("CylinderMesh_ay0x1")
+
+[node name="Machta2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140, 17.4808, 22)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machta2"]
+shape = SubResource("CylinderShape3D_fujpw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machta2"]
+mesh = SubResource("CylinderMesh_ay0x1")
+
+[node name="Machta3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140, 25, -130)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machta3"]
+shape = SubResource("CylinderShape3D_bxtbw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machta3"]
+mesh = SubResource("CylinderMesh_85p25")
+
+[node name="Machta4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140, 25, -130)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machta4"]
+shape = SubResource("CylinderShape3D_bxtbw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machta4"]
+mesh = SubResource("CylinderMesh_85p25")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 208, 388)
