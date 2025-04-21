@@ -1,4 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://ceflh8ufr35q5"]
+[gd_scene load_steps=18 format=3 uid="uid://ceflh8ufr35q5"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_bjc0k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e8i0x"]
 size = Vector3(450, 2, 450)
@@ -48,7 +50,48 @@ top_radius = 2.0
 bottom_radius = 2.0
 height = 50.0
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_gyjgf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cnew1"]
+albedo_color = Color(0.987384, 0.150828, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_u3qc6"]
+material = SubResource("StandardMaterial3D_cnew1")
+
+[sub_resource type="GDScript" id="GDScript_ya751"]
+script/source = "extends MeshInstance3D
+
+var socket : PacketPeerUDP
+var server_port = 6000
+
+func _ready():
+	socket = PacketPeerUDP.new()
+	var err = socket.bind(server_port)
+	if err != OK:
+		print(\"Не удалось привязать сокет к порту\")
+		return
+	print(\"🟢 Слушаем порт:\", server_port)
+
+func _process(_delta):
+	while socket.get_available_packet_count() > 0:
+		var data = socket.get_packet()
+		if data:
+			var json_string = data.get_string_from_utf8()
+			var json = JSON.new()
+			var result = json.parse(json_string)
+
+			if result == OK:
+				var dict = json.get_data()
+				print(\"🌡️ Температура:\", dict.get(\"temperature\", \"нет данных\"))
+				print(\"🌬️ Давление:\", dict.get(\"pressure\", \"нет данных\"))
+				print(\"💨 Скорость ветра:\", dict.get(\"wind_speed\", \"нет данных\"))
+				print(\"🧭 Направление ветра:\", dict.get(\"wind_direction\", \"нет данных\"))
+			else:
+				print(\"Ошибка разбора JSON:\", json.get_error_message())
+"
+
 [node name="Main" type="Node"]
+script = ExtResource("1_bjc0k")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -141,3 +184,15 @@ mesh = SubResource("CylinderMesh_85p25")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 208, 388)
+
+[node name="Sphere" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34, 182)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sphere"]
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0, 0)
+shape = SubResource("SphereShape3D_gyjgf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sphere"]
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0, 0)
+mesh = SubResource("SphereMesh_u3qc6")
+script = SubResource("GDScript_ya751")
