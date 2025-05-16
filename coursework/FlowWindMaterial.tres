@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bvjy7v2ny614r"]
+
+[ext_resource type="Shader" path="res://FlowWindMaterial.gdshader" id="1_mt33j"]
+[ext_resource type="Texture2D" uid="uid://vwtfra02d7p0" path="res://wind_texture.png" id="2_c6468"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_mt33j")
+shader_parameter/speed = 1.0
+shader_parameter/angle_deg = 0.0
+shader_parameter/albedo_texture = ExtResource("2_c6468")
